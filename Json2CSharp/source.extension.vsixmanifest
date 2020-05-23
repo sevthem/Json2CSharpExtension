@@ -4,6 +4,9 @@
         <Identity Id="Json2CSharp.909553e5-5820-4e61-b4e8-98836c859498" Version="1.0" Language="en-US" Publisher="Themistoklis Sevastos" />
         <DisplayName>Json2CSharp Converter</DisplayName>
         <Description xml:space="preserve">Json2CSharp Converter</Description>
+        <License>LICENSE.txt</License>
+        <Icon>Resources\JSON2CSharp.png</Icon>
+        <PreviewImage>Resources\JSON2CSharp.png</PreviewImage>
         <Preview>true</Preview>
     </Metadata>
     <Installation>

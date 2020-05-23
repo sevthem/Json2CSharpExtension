@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Json2CSharp", "Json2CSharp\Json2CSharp.csproj", "{15582786-06BD-43B4-B42C-609281F08E26}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Json2CSharpExtension", "Json2CSharp\Json2CSharpExtension.csproj", "{15582786-06BD-43B4-B42C-609281F08E26}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AAB90E6C-C464-4F1D-8D15-64BFE59E9089}"
 	ProjectSection(SolutionItems) = preProject
