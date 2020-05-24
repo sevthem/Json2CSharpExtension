@@ -36,3 +36,4 @@ To :
 	}
 }
 ```
+**You have to copy a json string and then from menu navigate to "Edit" -> "Paste Json as C# Code".**
