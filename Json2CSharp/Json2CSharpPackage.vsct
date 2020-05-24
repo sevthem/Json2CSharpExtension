@@ -39,6 +39,12 @@
       <Group guid="guidJson2CSharpPackageCmdSet" id="MyMenuGroup" priority="0x0600">
                 <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_EDIT"/>
       </Group>
+      <!--<Group guid="guidJson2CSharpPackageCmdSet" id="MyMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_EDITOR_PASTE_MENU" />
+      </Group>
+      <Group guid="guidJson2CSharpPackageCmdSet" id="MyMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+      </Group>-->
     </Groups>
 
     <!--Buttons section. -->
