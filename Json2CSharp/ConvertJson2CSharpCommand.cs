@@ -102,19 +102,18 @@ namespace Json2CSharp
                 }
                 catch (Exception)
                 {
-                    ShowError();
+                    ShowError("Not a valid JSON");
                 }
-
             }
             else
             {
-                ShowError();
+                ShowError("Works only on C# files");
             }
         }
 
-        private void ShowError()
+        private void ShowError(string errorMessage)
         {
-            string message = string.Format(CultureInfo.CurrentCulture, "Works only on C# files");
+            string message = string.Format(CultureInfo.CurrentCulture, errorMessage);
             string title = "Convert JSON to C#";
 
             // Show a message box to prove we were here

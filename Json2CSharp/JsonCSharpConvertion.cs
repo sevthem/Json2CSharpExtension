@@ -13,7 +13,6 @@ namespace Json2CSharpLib
             var classNum = 0;
             foreach (var line in inputLines)
             {
-
                 var newLine = string.Empty;
                 var n = line.Split(new string[] { ": " }, StringSplitOptions.RemoveEmptyEntries).Where(x => x.Trim().Length > 0).Select(X => X.Trim()).ToList();
                 if (line.Contains("{"))
@@ -59,7 +58,6 @@ namespace Json2CSharpLib
                     }
                     newLine = $"{GetIntent(classNum)}{leftPart} = {rightPart}{comma}";
                 }
-
 
                 output.AppendLine(newLine);
             }
