@@ -11,21 +11,22 @@ namespace Json2CSharpLib
             var inputLines = input.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
             var output = new StringBuilder();
             var classNum = 0;
-            foreach (var line in inputLines)
+            for (int i = 0; i < inputLines.Length; i++)
             {
+
                 var newLine = string.Empty;
-                var n = line.Split(new string[] { ": " }, StringSplitOptions.RemoveEmptyEntries).Where(x => x.Trim().Length > 0).Select(X => X.Trim()).ToList();
-                if (line.Contains("{"))
+                var n = inputLines[i].Split(new string[] { ": " }, StringSplitOptions.RemoveEmptyEntries).Where(x => x.Trim().Length > 0).Select(X => X.Trim()).ToList();
+                if (inputLines[i].Contains("{"))
                 {
                     if (n.Count == 1)
                     {
-                        newLine = "{";
+                        newLine = $"{GetIntent(classNum)}{{";
                     }
                     else
                     {
-                        var className = n[0].Trim('"').FirstCharToUpper();
-                        var leftPart = $"{className}";
-                        var rightPart = $"new {className}";
+                        var propertyName = n[0].ClearPropertyName();
+                        var leftPart = $"{propertyName}";
+                        var rightPart = $"new {propertyName.GetClassName(inputLines, i)}";
                         var classIntent = $"{Environment.NewLine}{GetIntent(classNum)}{{";
 
                         newLine = $"{GetIntent(classNum)}{leftPart} = {rightPart}{classIntent}";
@@ -33,10 +34,38 @@ namespace Json2CSharpLib
 
                     classNum++;
                 }
-                else if (line.Contains("}"))
+                else if (inputLines[i].Contains("["))
+                {
+                    var propertyName = n[0].ClearPropertyName();
+                    var leftPart = $"{propertyName}";
+                    var firstLineRightPart = $"new List<{propertyName.GetClassName(inputLines, i).ToSingle()}>";
+                    var classIntent = $"{Environment.NewLine}{GetIntent(classNum)}{{";
+
+
+
+                    if (inputLines[i].Contains("]"))
+                    {
+                        newLine = $"{GetIntent(classNum)}{leftPart} = {firstLineRightPart}()";
+                    }
+                    else
+                    {
+                        var firstLine = $"{GetIntent(classNum)}{leftPart} = {firstLineRightPart}{classIntent}";
+                        classNum++;
+                        var secondLineRightPart = $"new {propertyName.GetClassName(inputLines, i).ToSingle()}";
+                        var secondLine = $"{GetIntent(classNum)}{secondLineRightPart}";
+
+                        newLine = $"{firstLine}{Environment.NewLine}{secondLine}";
+                    }
+                }
+                else if (inputLines[i].Contains("]"))
                 {
                     classNum--;
-                    newLine = $"{GetIntent(classNum)}{line.Trim()}";
+                    newLine = $"{GetIntent(classNum)}{inputLines[i].Trim().Replace("]", "}")}";
+                }
+                else if (inputLines[i].Contains("}"))
+                {
+                    classNum--;
+                    newLine = $"{GetIntent(classNum)}{inputLines[i].Trim()}";
                 }
                 else
                 {
@@ -59,11 +88,13 @@ namespace Json2CSharpLib
                     newLine = $"{GetIntent(classNum)}{leftPart} = {rightPart}{comma}";
                 }
 
+
                 output.AppendLine(newLine);
             }
 
             return output.ToString();
         }
+
 
         private static string GetIntent(int classNum)
         {
