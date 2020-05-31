@@ -98,7 +98,7 @@ namespace Json2CSharp
             {
                 try
                 {
-                    Paste(application, Json2CSharpLib.JsonCSharpConvertion.Convert(ClipboardText));
+                    Paste(application, Json2CSharpLib.JsonCSharpConvertion.ConvertCore(ClipboardText));
                 }
                 catch (Exception)
                 {

@@ -31,7 +31,7 @@ namespace Json2CSharpLib
 
         public static string ClearPropertyName(this string n)
         {
-            return n.Trim('"').FirstCharToUpper();
+            return n.Trim('"').FirstCharToUpper().Split('[').First();
         }
 
         public static string ToSingle(this string rightPart)
@@ -58,7 +58,7 @@ namespace Json2CSharpLib
         public static string FirstCharToUpper(this string input)
         {
             if (string.IsNullOrEmpty(input))
-                throw new ArgumentException("ARGH!");
+                return input;
             return input[0].ToString().ToUpper() + input.Substring(1);
         }
 
