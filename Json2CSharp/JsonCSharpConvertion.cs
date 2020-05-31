@@ -36,7 +36,6 @@ namespace Json2CSharpLib
                     {
                         throw;
                     }
-
                 }
             }
         }
@@ -136,17 +135,16 @@ namespace Json2CSharpLib
 
         private static string GetStringFromArray(JArray jObject)
         {
-            string output;
             var outputStringBuilder = new StringBuilder();
             var classNum = GetClassNum(jObject);
-            var propertyName = jObject.Path.Split('.').Last().ToString().ClearPropertyName();
+            var propertyName = jObject.Path.Split('.').Last().ClearPropertyName();
             var className = GetClassName(jObject, propertyName);
 
             var newLine = $"new List<{className}>";
             outputStringBuilder.Append(newLine);
             if (jObject.Children().Any())
             {
-                outputStringBuilder.Append($"{Environment.NewLine}{GetIntent(classNum)}{{{Environment.NewLine}");
+                outputStringBuilder.Append(Environment.NewLine).Append(GetIntent(classNum)).Append('{').Append(Environment.NewLine);
 
                 var childrenText = new List<string>();
                 foreach (var item in jObject.Children())
@@ -156,44 +154,38 @@ namespace Json2CSharpLib
 
                 outputStringBuilder.Append(string.Join($",{Environment.NewLine}", childrenText));
 
-                newLine = $"{Environment.NewLine}{GetIntent(classNum)}{"}"}";
+                newLine = $"{Environment.NewLine}{GetIntent(classNum)}}}";
                 outputStringBuilder.Append(newLine);
             }
             else
             {
-                outputStringBuilder.Append($"()");
+                outputStringBuilder.Append("()");
             }
 
-            output = outputStringBuilder.ToString();
-            return output;
+            return outputStringBuilder.ToString();
         }
-
 
         private static string GetStringFromProperty(JProperty jObject)
         {
-            string output;
             var outputStringBuilder = new StringBuilder();
             var classNum = GetClassNum(jObject);
 
             var propertyName = jObject.Name.ClearPropertyName();
             var propertyValue = GetString(jObject.Value);
 
-
             var newLine = $"{GetIntent(classNum)}{propertyName} = {propertyValue}";
             outputStringBuilder.Append(newLine);
 
-            output = outputStringBuilder.ToString();
-            return output;
+            return outputStringBuilder.ToString();
         }
 
         private static string GetStringFromObject(JToken jObject)
         {
-            string output;
             var outputStringBuilder = new StringBuilder();
             var classNum = GetClassNum(jObject);
 
             var propertyName = jObject.Path.Split(new string[] { "." }, StringSplitOptions.None)?.Last()?.ClearPropertyName();
-            var className = GetClassName(jObject, propertyName); ;
+            var className = GetClassName(jObject, propertyName);
 
             if (string.IsNullOrWhiteSpace(className))
             {
@@ -217,17 +209,15 @@ namespace Json2CSharpLib
 
             outputStringBuilder.Append(string.Join($",{Environment.NewLine}", childrenText));
 
-            newLine = $"{Environment.NewLine}{GetIntent(classNum)}{"}"}";
+            newLine = $"{Environment.NewLine}{GetIntent(classNum)}}}";
             outputStringBuilder.Append(newLine);
 
-
-            output = outputStringBuilder.ToString();
-            return output;
+            return outputStringBuilder.ToString();
         }
 
         private static string GetClassName(JToken jObject, string propertyName)
         {
-            if (jObject.Children().Count() > 0 && jObject.Children().First() is JValue)
+            if (jObject.Children().Any() && jObject.Children().First() is JValue)
             {
                 return jObject.Children().First().Type.ToString().ToLower();
             }
@@ -261,7 +251,6 @@ namespace Json2CSharpLib
             {
                 return value;
             }
-
 
             for (int i = 1; i < value.Length; i++)
             {

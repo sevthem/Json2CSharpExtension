@@ -114,7 +114,7 @@ namespace Json2CSharp
         private void ShowError(string errorMessage)
         {
             string message = string.Format(CultureInfo.CurrentCulture, errorMessage);
-            string title = "Convert JSON to C#";
+            const string title = "Convert JSON to C#";
 
             // Show a message box to prove we were here
             VsShellUtilities.ShowMessageBox(
